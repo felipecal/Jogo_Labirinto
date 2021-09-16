@@ -1,5 +1,5 @@
 public class Labirinto {
-    private static final char Tamanho = 20;
+    private static final char Tamanho = 10;
     private static final char Horizontal = '_';
     private static final char Vertical = '|';
     private static final char campo_vazio = ' ';
@@ -9,6 +9,8 @@ public class Labirinto {
     private static final char Fim = 'F';
     private static int linhaInicio;
     private static int colunaInicio;
+    private static final char Rota = '"';
+    private static final char Rota_sem_saida = '_';
     private static char[][] contagem;
     public static void Matriz() {
 
@@ -36,12 +38,12 @@ public class Labirinto {
 
             }
         }
-        linhaInicio = gerarNumero(1, Tamanho / 2 );
-        colunaInicio = gerarNumero(18, Tamanho / 2 );
-        contagem[linhaInicio][colunaInicio] = Fim;
-        int linhaDestino = gerarNumero(Tamanho - 1, Tamanho - 1);
-        int colunaDestino = gerarNumero(Tamanho / 18, Tamanho - 2);
-        contagem[linhaDestino][colunaDestino] = Começo;
+        linhaInicio = gerarNumero(Tamanho/2, Tamanho /2-1  );
+        colunaInicio = gerarNumero(Tamanho/2, Tamanho/ 2-1  );
+        contagem[linhaInicio][colunaInicio] = Começo;
+        int linhaDestino = gerarNumero(1,  Tamanho -2  );
+        int colunaDestino = gerarNumero(1, Tamanho -2  );
+        contagem[linhaDestino][colunaDestino] = Fim;
 
     }
     public static void imprimir() {
@@ -57,6 +59,13 @@ public class Labirinto {
             System.out.println();
 
         }
+        try {
+            Thread.sleep(350);
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -65,6 +74,61 @@ public class Labirinto {
         return minimo + valor;
     }
 
+    public static boolean procurarCaminho(int linhaAtual, int colunaAtual) {
+        int proxLinha;
+        int proxColuna;
+        boolean achou = false;
+        // tenta subir
+        proxLinha = linhaAtual - 1;
+        proxColuna = colunaAtual;
+        achou = tentarCaminho(proxLinha, proxColuna);
+        // tenta descer
+        if (!achou) {
+            proxLinha = linhaAtual + 1;
+            proxColuna = colunaAtual;
+            achou = tentarCaminho(proxLinha, proxColuna);
+        }
+        // tenta à esquerda
+        if (!achou) {
+            proxLinha = linhaAtual;
+            proxColuna = colunaAtual - 1;
+            achou = tentarCaminho(proxLinha, proxColuna);
+        }
+        // tenta à direita
+        if (!achou) {
+            proxLinha = linhaAtual;
+            proxColuna = colunaAtual + 1;
+            achou = tentarCaminho(proxLinha, proxColuna);
+        }
+        return achou;
+    }
+
+    private static boolean tentarCaminho(int proxLinha, int proxColuna) {
+        boolean achou = false;
+        if (contagem[proxLinha][proxColuna] == Fim) {
+            achou = true;
+        }
+        else if (posicaoVazia(proxLinha, proxColuna)) {
+            // marcar
+            contagem[proxLinha][proxColuna] = Rota;
+            imprimir();
+            achou = procurarCaminho(proxLinha, proxColuna);
+            if (!achou) {
+                contagem[proxLinha][proxColuna] = Rota_sem_saida;
+                imprimir();
+            }
+        }
+        return achou;
+    }
+    public static boolean posicaoVazia(int linha, int coluna) {
+        boolean vazio = false;
+        if (linha >= 0 && coluna >= 0 && linha < Tamanho && coluna < Tamanho) {
+            vazio = (contagem[linha][coluna] == campo_vazio);
+        }
+        return vazio;
+    }
+
+
     public static void main(String Arg[]) {
 
             contagem = new char[Tamanho][Tamanho];
@@ -72,6 +136,16 @@ public class Labirinto {
             Matriz();
 
             imprimir();
+
+            System.out.println("\n Procurando caminho possivel \n");
+            boolean achou = procurarCaminho(linhaInicio, colunaInicio);
+            if (achou) {
+            System.out.println("CAMINHO ENCONTRADO!");
+            }
+            else {
+                System.out.println("\n Infelizmente não existe caminho possivel para chegar ao destino \n");
         }
+
+    }
     }
 
