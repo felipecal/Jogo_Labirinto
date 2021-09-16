@@ -13,10 +13,7 @@ public class Labirinto {
     private static final char Rota_sem_saida = '_';
     private static char[][] contagem;
     public static void Matriz() {
-
         int i =0;
-
-//Na linha 11 tinha um for criado pelo professor, substitui por um while que também pode ser utilizado como um contador.
         while (i < Tamanho){
             contagem[i][0] = Vertical;
 
@@ -44,7 +41,6 @@ public class Labirinto {
         int linhaDestino = gerarNumero(1,  Tamanho -2  );
         int colunaDestino = gerarNumero(1, Tamanho -2  );
         contagem[linhaDestino][colunaDestino] = Fim;
-
     }
     public static void imprimir() {
 
@@ -53,11 +49,8 @@ public class Labirinto {
             for (int j = 0; j < Tamanho; j++) {
 
                 System.out.print(contagem[i][j]);
-
             }
-
             System.out.println();
-
         }
         try {
             Thread.sleep(350);
@@ -65,36 +58,29 @@ public class Labirinto {
         catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-
     }
 
     public static int gerarNumero(int minimo, int maximo) {
         int valor = (int) Math.round(Math.random()  * (maximo - minimo));
         return minimo + valor;
     }
-
     public static boolean procurarCaminho(int linhaAtual, int colunaAtual) {
         int proxLinha;
         int proxColuna;
         boolean achou = false;
-        // tenta subir
         proxLinha = linhaAtual - 1;
         proxColuna = colunaAtual;
         achou = tentarCaminho(proxLinha, proxColuna);
-        // tenta descer
         if (!achou) {
             proxLinha = linhaAtual + 1;
             proxColuna = colunaAtual;
             achou = tentarCaminho(proxLinha, proxColuna);
         }
-        // tenta à esquerda
         if (!achou) {
             proxLinha = linhaAtual;
             proxColuna = colunaAtual - 1;
             achou = tentarCaminho(proxLinha, proxColuna);
         }
-        // tenta à direita
         if (!achou) {
             proxLinha = linhaAtual;
             proxColuna = colunaAtual + 1;
@@ -109,7 +95,6 @@ public class Labirinto {
             achou = true;
         }
         else if (posicaoVazia(proxLinha, proxColuna)) {
-            // marcar
             contagem[proxLinha][proxColuna] = Rota;
             imprimir();
             achou = procurarCaminho(proxLinha, proxColuna);
@@ -127,16 +112,10 @@ public class Labirinto {
         }
         return vazio;
     }
-
-
     public static void main(String Arg[]) {
-
             contagem = new char[Tamanho][Tamanho];
-
             Matriz();
-
             imprimir();
-
             System.out.println("\n Procurando caminho possivel \n");
             boolean achou = procurarCaminho(linhaInicio, colunaInicio);
             if (achou) {
@@ -145,7 +124,6 @@ public class Labirinto {
             else {
                 System.out.println("\n Infelizmente não existe caminho possivel para chegar ao destino \n");
         }
-
     }
     }
 
