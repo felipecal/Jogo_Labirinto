@@ -23,4 +23,4 @@ Voltar para o menu de escolhas<br>
 <br>
 <p align="center">Código Fonte:</p>
 <br>
-Caso queira olhar o código fonte siga as mesmas opções contidas em atividades até dentro do diretorio src, após isso abra o arquivo Labirinto.java
+Caso queira olhar o código fonte siga as mesmas opções contidas em Organizações até dentro do diretorio src, após isso abra o arquivo Labirinto.java
