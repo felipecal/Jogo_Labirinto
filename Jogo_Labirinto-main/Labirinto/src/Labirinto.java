@@ -35,10 +35,10 @@ public class Labirinto {
 
             }
         }
-        linhaInicio = gerarNumero(Tamanho/2, Tamanho /2-1  );
-        colunaInicio = gerarNumero(Tamanho/2, Tamanho/ 2-1  );
+        linhaInicio = gerarNumero(Tamanho/2, Tamanho /2-1   );
+        colunaInicio = gerarNumero(Tamanho/2, Tamanho/2-1   );
         contagem[linhaInicio][colunaInicio] = Começo;
-        int linhaDestino = gerarNumero(1,  Tamanho -2  );
+        int linhaDestino = gerarNumero(1,  Tamanho/2  );
         int colunaDestino = gerarNumero(1, Tamanho -2  );
         contagem[linhaDestino][colunaDestino] = Fim;
     }
@@ -53,7 +53,7 @@ public class Labirinto {
             System.out.println();
         }
         try {
-            Thread.sleep(350);
+            Thread.sleep(0);
         }
         catch (InterruptedException e) {
             e.printStackTrace();
