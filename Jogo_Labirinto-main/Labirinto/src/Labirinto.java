@@ -53,7 +53,7 @@ public class Labirinto {
             System.out.println();
         }
         try {
-            Thread.sleep(350);
+            Thread.sleep(400);
         }
         catch (InterruptedException e) {
             e.printStackTrace();
